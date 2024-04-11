@@ -40,10 +40,10 @@ class Request:
         self.data = ''.join(lines[len(self.headers) + 1:]).strip()
 
     def send(self,num):
-        proxies = {
-            'http':'127.0.0.1:8080',
-            'https':'127.0.0.1:8080'
-        }
+        # proxies = {
+        #     'http':'127.0.0.1:8080',
+        #     'https':'127.0.0.1:8080'
+        # }
 
         headers = {}
 
@@ -59,7 +59,7 @@ class Request:
             url=self.url,
             headers=headers,
             data=data
-         ,verify=False   ,proxies = proxies
+         # ,verify=False   ,proxies = proxies
             )
         response_obj = Response(response.status_code, response.headers, response.text,)
         return response_obj
