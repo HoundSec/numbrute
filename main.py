@@ -26,14 +26,11 @@ otpList = []
 for num in range(10 ** args.length):
     otp = str(num).zfill(args.length)
     otpList.append(otp)
-for i in range(10 ** args.length):
-    random_otp = random.choice(otpList)
-    q.put(random_otp)
-    otpList.remove(random_otp)
-    
 
+random.shuffle(otpList)
 
-
+for i in otpList:
+    q.put(i)
 
 # Check if either error_message or error_code is provided
 if not (args.error_message or args.error_code):
