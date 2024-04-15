@@ -33,6 +33,8 @@ Content-Type: application/json
 { "userid": "{{num}}", "email": "johndoe@example.com", "password": "securepassword123" }
 ```
 
+You can add the payload both in the headers and the body of the request. Support for adding payloads in the path will be added soon.
+
 
 ### Flags
 
