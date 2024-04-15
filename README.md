@@ -17,7 +17,7 @@ in the request file, replace the part where the payload is bing sent with {{num}
 From:
 
 ```http
-POST https://www.example.com/api/users HTTP/1.1
+POST /api/users HTTP/1.1
 Host: www.example.com
 Content-Type: application/json
 
@@ -26,7 +26,7 @@ Content-Type: application/json
 To:
 
 ```http
-POST https://www.example.com/api/users HTTP/1.1
+POST /api/users HTTP/1.1
 Host: www.example.com
 Content-Type: application/json
 
@@ -38,6 +38,7 @@ Content-Type: application/json
 
 - `-f <request filepath>` use this flag to specify the path of the request file 
 - `-e <error message>` the error message shown on incorrect attempt
+- `-s <stop message>` (optional) specify the expected message where you want the attack stop 
 - `-c <status code of error response>` the status code came with the error message in response
 - `-t <number of threads>` (optional) use this to add the number of threads you wanna run duruing the attack, default is 3
 - `-l <lenght of the number>` add the lenght of combinations to try
@@ -46,8 +47,12 @@ Content-Type: application/json
 example:
 
 ```bash
-python main.py -f post_req.http -e "invalid attempt" -c 401 -t 5 -l 4 
+python main.py -f post_req.http -e "invalid attempt" -s success -c 401 -t 5 -l 4 
 ```
 
-numberute will keep attacking long as it finds either the `error message` given or the `error status code` in the response. But, once it sees anything different, for example if the response status code changes or the if the server doesn't send the error in the response, numbrute stops there.
+numberute will keep sending payloads as long as: 
 
+- it finds either the `error message` given or the `error status code` in the response. 
+- or the response doesn't contain the expected message 
+
+numbrute stops the attack when the response doesn't match the above condition
