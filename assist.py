@@ -68,9 +68,10 @@ class Request:
 
 class Attack(Request):
     incorrect_num = True
-    def __init__(self,request_file_path,error_message=None,error_code=None,threads=3,disable_https=False):
+    def __init__(self,request_file_path,error_message=None, stop_message=None, error_code=None,threads=3,disable_https=False):
         super().__init__(request_file_path,disable_https)
         self.error_message = error_message
+        self.stop_message = stop_message
         self.error_code = error_code
         self.threads = threads
     
@@ -79,7 +80,10 @@ class Attack(Request):
         if self.error_message is not None and not self.error_message in response.text:
             self.incorrect_num = False
             return response
-        if self.error_code is not None and self.error_code != response.code:
+        elif self.stop_message is not None and self.stop_message in response.text:
+            self.incorrect_num = False
+            return response
+        elif self.error_code is not None and self.error_code != response.code:
             self.incorrect_num = False
             return response
 
