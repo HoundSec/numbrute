@@ -8,7 +8,7 @@ A versatile web app brute-force tool written in pure Python, capable of running 
 ## How to use it
 
 To use this tool, you have to save requests to a file from burp-suit, why'd do that? you might ask. Well, because this tool has randomized brute-forcing and there's no throattling unlike burp-suit, specially the community version.
-in the request file, replace the part where the payload is bing sent with {{num}}
+in the request file, replace the part where the payload is being sent with {{num}}
 
 > NOTE: This tool uses jinja templates underneath
 
@@ -33,8 +33,7 @@ Content-Type: application/json
 { "userid": "{{num}}", "email": "johndoe@example.com", "password": "securepassword123" }
 ```
 
-You can add the payload both in the headers and the body of the request. Support for adding payloads in the path will be added soon.
-
+You can add the payload/num anywhere in the request file.
 
 ### Flags
 
