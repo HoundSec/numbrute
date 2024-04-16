@@ -8,55 +8,44 @@ class Response:
         self.text = text
 
 class Request:
-    method = ''
-    path = ''
-    headers = {}
-    url = ''
-    data = ''
-
     def __init__(self,request_file_path,disable_https=False):
         self.request_file_path = request_file_path
         if disable_https:
-            self.url = "http://"
+            self.protocol = "http://"
         else:
-            self.url = "https://"
-    def load_file(self):
+            self.protocol = "https://"
         with open(self.request_file_path,"r") as file:
-            lines = file.readlines()
+           self.file_content = file.read() 
+
+    def send(self,num):
+        template = Template(self.file_content)
+        request = template.render({"num":num})
+        lines = request.splitlines()
 
         request_line= lines[0].strip()
-        self.method= request_line.split()[0]
-        self.path = request_line.split()[1]
+        method= request_line.split()[0]
+        path = request_line.split()[1]
+        headers = {}
 
-        # Extract headers
         for line in lines[1:]:
             if not line.strip():
                 break  # Stop when encountering an empty line (indicating the end of headers)
             key, value = line.strip().split(': ', 1)
-            self.headers[key] = value
-        self.url = self.url + self.headers["Host"]  + self.path
+            headers[key] = value
+        url = self.protocol + headers["Host"]  + path
 
         # Extract data (if exists)
-        self.data = ''.join(lines[len(self.headers) + 1:]).strip()
+        data = ''.join(lines[len(headers) + 1:]).strip()
 
-    def send(self,num):
+        #proxy for debuging
         # proxies = {
         #     'http':'127.0.0.1:8080',
         #     'https':'127.0.0.1:8080'
         # }
 
-        headers = {}
-
-        for key in self.headers:
-            template = Template(self.headers[key])
-            headers[key] = template.render({"num":num})
-
-        template = Template(self.data)
-        data = template.render({"num":num})
-
         response = requests.request(
-            method=self.method,
-            url=self.url,
+            method=method,
+            url=url,
             headers=headers,
             data=data
          # ,verify=False   ,proxies = proxies

@@ -46,7 +46,6 @@ target = Attack(
     threads=args.threads,
     disable_https=args.disable_https
 )
-target.load_file()
 
 def crack():
     while target.incorrect_num:
