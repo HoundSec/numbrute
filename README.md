@@ -43,7 +43,7 @@ You can add the payload/num anywhere in the request file.
 - `-c <status code of error response>` the status code came with the error message in response
 - `-t <number of threads>` (optional) use this to add the number of threads you wanna run duruing the attack, default is 3
 - `-l <lenght of the number>` add the lenght of combinations to try
-- `-H` (optional) add this flag to disable HTTPS
+- `-H` (optional) add this flag to disable HTTPS when the server doesn't support HTTPs
 
 example:
 
